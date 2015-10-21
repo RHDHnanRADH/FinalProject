@@ -1,12 +1,12 @@
 // Object declaration
 Sequence sequence;
 boolean bool = true;
-int x= 20;
+  int x= 50;
 
 void setup() {
   size(720,640);
   // Object init
-  sequence = new Triangular();
+  sequence = new Deficient();
 }
 
 void draw() {
