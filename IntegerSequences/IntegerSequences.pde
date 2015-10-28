@@ -1,12 +1,15 @@
+import controlP5.*;
+
 // Object declaration
 Sequence sequence;
 boolean bool = true;
-  int x= 50;
+ControlP5 cp5;
+String deff; int x = 23;
 
 void setup() {
   size(720,640);
   // Object init
-  sequence = new Deficient();
+  sequence = new Triangular();
 }
 
 void draw() {
@@ -15,6 +18,7 @@ void draw() {
   sequence.display(x);
 }
 
+//Al hacer clic con el mouse, el objeto varía de clase
 void mouseClicked(){
   if(bool){
     sequence = new Deficient();
