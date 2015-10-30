@@ -4,12 +4,13 @@ import controlP5.*;
 Sequence sequence;
 boolean bool = true;
 ControlP5 cp5;
-String deff; int x = 23;
-
+String deff; 
+int x = 23, y=0, jg=30;
+//'jg' corresponde al coeficiente inicial, a_0, de la serie Juggler
 void setup() {
   size(720,640);
   // Object init
-  sequence = new Triangular();
+  sequence = new Juggler(jg);
 }
 
 void draw() {
@@ -20,13 +21,25 @@ void draw() {
 
 //Al hacer clic con el mouse, el objeto varía de clase
 void mouseClicked(){
-  if(bool){
-    sequence = new Deficient();
-    sequence.display(x);
-    bool = false;
-  }else if(!bool){
-    sequence = new Triangular();
-    sequence.display(x);
-    bool = true;
+  y++;
+  if(y==3){
+    y=0;
+  }
+  switch(y){
+    case 0:{
+      sequence = new Juggler(jg);
+      sequence.display(x);
+      break;
+    }
+    case 1:{
+      sequence = new Triangular();
+      sequence.display(x);
+      break;
+    }
+    case 2:{
+      sequence = new Deficient();
+      sequence.display(x);
+      break;
+    }
   }
 }
