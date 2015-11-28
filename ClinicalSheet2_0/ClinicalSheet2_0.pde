@@ -169,3 +169,35 @@ void arrayInit(){
     Patients.add(patient);
   }
 }
+
+void keyReleased(){
+  if (keyCode == CONTROL){
+    String[][] exp = new String[Patients.size()][7];
+    for(int i=0;i<Patients.size();i++){
+      for(int j=0;j<7;j++){
+        exp[i][j]=selection(j,Patients.get(i));
+      }
+    }
+    exportExcel(exp, dataPath("Documentos")+"/"+"Libro1.xlsx");
+  }
+}
+
+String selection(int j,Patient p){
+  String ret;
+  if(j==0){
+    ret = p.name;
+  }else if(j==1){
+    ret = p.lastName;
+  }else if(j==2){
+    ret = p.document;
+  }else if(j==3){
+    ret = p.day;
+  }else if(j==4){
+    ret = p.month;
+  }else if(j==5){
+    ret = p.year;
+  }else{
+    ret = p.password;
+  }
+  return ret;
+}

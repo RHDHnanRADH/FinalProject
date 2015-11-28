@@ -54,7 +54,7 @@ void exportExcel(String[][] data, String filepath) {
   Sheet sh = wwb.createSheet();
   int sizeX = data.length;
   int sizeY = data[0].length;
-  for (int i=0;i<=sizeX;++i) {
+  for (int i=0;i<sizeX;++i) {
     Row row = sh.createRow(i);
     for (int j=0;j<sizeY;++j) {
       Cell cell = row.createCell(j);
