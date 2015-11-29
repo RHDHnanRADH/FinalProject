@@ -84,9 +84,9 @@ void creatingControls(){
   cp6.getController("Contraseña").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
   
   //Crea las listas para la selección del doctor
-  cp7.addScrollableList("Especialidad").setPosition(0.05*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height));
-  cp7.addScrollableList("Doctores").setPosition(0.32*width,0.05*height).setSize(int(0.5*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
-  cp7.addScrollableList("toDowithDoctor").setLabel("¿Qué desea hacer?").setPosition(0.84*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
+  cp7.addScrollableList("Especialidad").setPosition(0.03*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height));
+  cp7.addScrollableList("Doctores").setPosition(0.3*width,0.05*height).setSize(int(0.4*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
+  cp7.addScrollableList("toDowithDoctor").setLabel("¿Qué desea hacer?").setPosition(0.72*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
   
   cp7.getController("Especialidad").getCaptionLabel().setFont(font).toUpperCase(false);
   cp7.getController("Doctores").getCaptionLabel().setFont(font).toUpperCase(false);
