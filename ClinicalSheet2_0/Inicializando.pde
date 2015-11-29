@@ -52,9 +52,11 @@ void creatingControls(){
   //Crea los botones para la página del perfil
   cp4.addButton("Modificar").setLabel("Modificar datos").setValue(128).setPosition(0.5*width-(0.375*width),0.3*height).setSize(int(0.75*width),int(0.08*height));
   cp4.addButton("Ver").setLabel("Ver datos").setValue(128).setPosition(0.5*width-(0.375*width),0.4*height).setSize(int(0.75*width),int(0.08*height));
+  cp4.addButton("Date").setLabel("Pedir cita").setValue(128).setPosition(0.5*width-(0.375*width),0.5*height).setSize(int(0.75*width),int(0.08*height));
 
   cp4.getController("Modificar").getCaptionLabel().setFont(font).toUpperCase(false);
   cp4.getController("Ver").getCaptionLabel().setFont(font) .toUpperCase(false);
+  cp4.getController("Date").getCaptionLabel().setFont(font) .toUpperCase(false);
   
   //Crea los campos de texto para la visualización de los datos
   nombre = cp5.addTextarea("Nombre").setPosition(0.05*width, 0.05*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
@@ -80,6 +82,9 @@ void creatingControls(){
   cp6.getController("Mes").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
   cp6.getController("Año").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
   cp6.getController("Contraseña").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  
+  cp7.addScrollableList("Especialidad").setPosition(0.05*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height));
+  cp7.getController("Especialidad").getCaptionLabel().setFont(font).toUpperCase(false);
   
   cp8.addButton("Regresar").setPosition(0.5625*width,0.93*height).setSize(int(0.42*width),int(0.05*height));
   cp8.getController("Regresar").getCaptionLabel().setFont(font).toUpperCase(false);

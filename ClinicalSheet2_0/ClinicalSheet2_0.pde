@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.io.*;
+import java.util.*;
 import org.apache.poi.ss.usermodel.Sheet;
 
 
@@ -11,12 +12,13 @@ Patient pLogged=null;
 Doctor dLogged=null;
 PFont pfont;
 String[][] impP, impD;
+ArrayList special = new ArrayList();
 Textarea nombre, apellidos, nacimiento, documento, especialidad;
 Textfield mNombre, mApellidos, mDocumento, mDia, mMes, mAnio, mContra;
 
+
 void setup (){
   size(750,500);
-  println(this);
   declaringControls();
   creatingControls();
   page=0;
@@ -43,7 +45,6 @@ public void Registrar(){
                        cp2.get(Textfield.class,"Año").getText(),
                        cp2.get(Textfield.class,"Contraseña").getText());
  Patients.add(patient);
- println(Patients.size(),patient);
  page=0;
 }
 
@@ -60,7 +61,6 @@ void lookForPatient(String doc, String pw){
   for(int i=0;i<Patients.size();i++){
     if(doc.equals(Patients.get(i).document) && pw.equals(Patients.get(i).password)){
       loginP = true;
-      println("logged: patient");
       pLogged = Patients.get(i);
       page = 3;
       break;
@@ -70,7 +70,6 @@ void lookForPatient(String doc, String pw){
     for(int i=0;i<Doctors.size();i++){
       if(doc.equals(Doctors.get(i).document) && pw.equals(Doctors.get(i).password)){
         loginD = true;
-        println("logged: doctor");
         dLogged = Doctors.get(i);
         page = 3;
         break;
@@ -95,6 +94,10 @@ void Modificar(){
 void Guardar(){
   pLogged.getChanges();
   page=3;
+}
+
+void Date(){
+  page=6;
 }
 
 void pageSelect(){
@@ -164,7 +167,7 @@ void pageSelect(){
      break;
      
    case(6):
-     cp1.setVisible(true);
+     cp1.setVisible(false);
      cp2.setVisible(false);
      cp3.setVisible(false);
      cp4.setVisible(false);
@@ -195,6 +198,7 @@ void arrayInit(){
     Doctor doctor = new Doctor(impD[i][0],impD[i][1],impD[i][2],impD[i][3],impD[i][4],impD[i][5],impD[i][6], impD[i][7]);
     Doctors.add(doctor);
   }
+  specialInit();
 }
 
 //Oprimiendo la tecla 'Ctrl' se actualiza el archivo de Pacientes. El archivo Doctores se queda inamovible.
@@ -228,4 +232,11 @@ String selection(int j,Patient p){
     ret = p.password;
   }
   return ret;
+}
+
+void specialInit(){
+  for (int i=0;i<Doctors.size();i++){
+    special.add(Doctors.get(i).speciality);
+  }
+  cp7.get(ScrollableList.class,"Especialidad").addItems(special);
 }
