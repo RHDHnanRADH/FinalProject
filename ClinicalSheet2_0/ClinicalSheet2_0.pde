@@ -4,12 +4,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 
 ArrayList<Patient> Patients = new ArrayList<Patient>();
+ArrayList<Doctor> Doctors = new ArrayList<Doctor>();
 ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8; 
 int page;
 Patient logged;
 PFont pfont;
-String[][] imp;
-Textarea nombre, apellidos, nacimiento, documento;
+String[][] impP, impD;
+Textarea nombre, apellidos, nacimiento, documento, especialidad;
 
 void setup (){
   size(750,500);
@@ -17,7 +18,9 @@ void setup (){
   declaringControls();
   creatingControls();
   page=0;
-  imp = importExcel(dataPath("Documentos")+"/"+"Libro1.xlsx");
+  impP = importExcel(dataPath("Documentos")+"/"+"Pacientes.xlsx",7);
+  impD = importExcel(dataPath("Documentos")+"/"+"Doctores.xlsx",8);
+  println(impP.length,impP[0].length,impD.length,impD[0].length);
   arrayInit();
 }
 
@@ -52,22 +55,27 @@ void Ingresar(){page=2;}
 void IngresarP(){lookForPatient(cp3.get(Textfield.class,"Documento").getText(),cp3.get(Textfield.class,"Contraseña").getText());}
 
 void lookForPatient(String doc, String pw){
-  boolean login = false;
+  boolean loginP = false, loginD = false;
   for(int i=0;i<Patients.size();i++){
     if(doc.equals(Patients.get(i).document) && pw.equals(Patients.get(i).password)){
-      login=true;
-      setInfo(Patients.get(i));
+      loginP=true;
+      Patients.get(i).show();
       page=3;
       break;
     }
   }
-  if(!login)println("Documento y/o contraseña incorrectos");
-}
-
-void setInfo(Patient patient){
-  nombre.setText("Nombre: "+patient.name+" "+patient.lastName);
-  documento.setText("Documento: "+patient.document);
-  nacimiento.setText("Fecha de Nacimiento: "+ patient.day + " de " + patient.month + " de " + patient.year);
+  if(!loginP){
+    for(int i=0;i<Doctors.size();i++){
+      if(doc.equals(Doctors.get(i).document) && pw.equals(Doctors.get(i).password)){
+        loginD=true;
+        Patients.get(i).show();
+        page=3;
+      break;
+    }
+  }
+  }
+  
+  if(!loginP && !loginD)println("Documento y/o contraseña incorrectos");
 }
 
 void Ver(){
@@ -164,12 +172,17 @@ void pageSelect(){
 
 
 void arrayInit(){
-  for (int i=0;i<imp.length;i++){
-    Patient patient = new Patient(imp[i][0],imp[i][1],imp[i][2],imp[i][3],imp[i][4],imp[i][5],imp[i][6]);
+  for (int i=0;i<impP.length;i++){
+    Patient patient = new Patient(impP[i][0],impP[i][1],impP[i][2],impP[i][3],impP[i][4],impP[i][5],impP[i][6]);
     Patients.add(patient);
+  }
+  for (int i=0;i<impD.length;i++){
+    Doctor doctor = new Doctor(impD[i][0],impD[i][1],impD[i][2],impD[i][3],impD[i][4],impD[i][5],impD[i][6], impD[i][7]);
+    Doctors.add(doctor);
   }
 }
 
+//Oprimiendo la tecla 'Ctrl' se actualiza el archivo de Pacientes. El archivo Doctores se queda inamovible.
 void keyReleased(){
   if (keyCode == CONTROL){
     String[][] exp = new String[Patients.size()][7];
@@ -178,7 +191,7 @@ void keyReleased(){
         exp[i][j]=selection(j,Patients.get(i));
       }
     }
-    exportExcel(exp, dataPath("Documentos")+"/"+"Libro1.xlsx");
+    exportExcel(exp, dataPath("Documentos")+"/"+"Pacientes.xlsx");
   }
 }
 

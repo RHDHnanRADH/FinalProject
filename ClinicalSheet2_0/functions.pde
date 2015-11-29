@@ -3,7 +3,7 @@ Sheet sh=null;
 InputStream inp=null;
 Workbook wb=null;
 
-String[][] importExcel(String filepath) {
+String[][] importExcel(String filepath,int y) {
   String[][] temp;
   try {
     inp = new FileInputStream(filepath);
@@ -18,7 +18,7 @@ String[][] importExcel(String filepath) {
     //println(temp);
   Sheet sheet = wb.getSheetAt(0);
   int sizeX = sheet.getLastRowNum();
-  int sizeY = 7;
+  int sizeY = y;
   for (int i=0;i<=sizeX;++i) {
     Row row = sheet.getRow(i);
     for (int j=0;j<sizeY;++j) {
