@@ -62,7 +62,30 @@ void creatingControls(){
   nacimiento = cp5.addTextarea("Fecha de nacimiento").setPosition(0.05*width, 0.19*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
   especialidad = cp5.addTextarea("Especialidad").setPosition(0.05*width, 0.26*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
   
-   //TO DO: cp6 to cp7
+  //TO DO: cp6 to cp7
+  mNombre = cp6.addTextfield("Nombre").setPosition(0.05*width, 0.05*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mApellidos = cp6.addTextfield("Apellidos").setPosition(0.05*width, 0.15*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mDocumento = cp6.addTextfield("Documento de Identidad").setPosition(0.05*width, 0.25*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mDia = cp6.addTextfield("Dia").setPosition(0.05*width, 0.35*height).setSize(int(0.25*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mMes = cp6.addTextfield("Mes").setPosition(0.32*width, 0.35*height).setSize(int(0.25*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mAnio = cp6.addTextfield("Año").setPosition(0.59*width, 0.35*height).setSize(int(0.25*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  mContra = cp6.addTextfield("Contraseña").setPosition(0.05*width, 0.45*height).setSize(int(0.25*width),int(0.06*height)).setFont(font).setAutoClear(true);
+  cp6.addButton("Guardar").setPosition(0.05*width,0.55*height).setSize(int(0.42*width),int(0.05*height));
+    
+  cp6.getController("Guardar").getCaptionLabel().setFont(font) .toUpperCase(false);
+  cp6.getController("Documento de Identidad").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Nombre").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Apellidos").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Dia").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Mes").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Año").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  cp6.getController("Contraseña").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
+  
   cp8.addButton("Regresar").setPosition(0.5625*width,0.93*height).setSize(int(0.42*width),int(0.05*height));
   cp8.getController("Regresar").getCaptionLabel().setFont(font).toUpperCase(false);
+}
+
+void clearcp3(){
+  cp3.get(Textfield.class,"Documento").clear();
+  cp3.get(Textfield.class,"Contraseña").clear();
 }

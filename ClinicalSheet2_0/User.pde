@@ -3,6 +3,8 @@ abstract class User{
    
   abstract void show(); 
   
+  abstract void modify();
+  
   void ConfirmDate(){
   }
   void CancelDate(){

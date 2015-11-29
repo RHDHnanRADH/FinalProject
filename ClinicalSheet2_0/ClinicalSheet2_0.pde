@@ -7,10 +7,12 @@ ArrayList<Patient> Patients = new ArrayList<Patient>();
 ArrayList<Doctor> Doctors = new ArrayList<Doctor>();
 ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8; 
 int page;
-Patient logged;
+Patient pLogged=null;
+Doctor dLogged=null;
 PFont pfont;
 String[][] impP, impD;
 Textarea nombre, apellidos, nacimiento, documento, especialidad;
+Textfield mNombre, mApellidos, mDocumento, mDia, mMes, mAnio, mContra;
 
 void setup (){
   size(750,500);
@@ -20,7 +22,6 @@ void setup (){
   page=0;
   impP = importExcel(dataPath("Documentos")+"/"+"Pacientes.xlsx",7);
   impD = importExcel(dataPath("Documentos")+"/"+"Doctores.xlsx",8);
-  println(impP.length,impP[0].length,impD.length,impD[0].length);
   arrayInit();
 }
 
@@ -58,28 +59,42 @@ void lookForPatient(String doc, String pw){
   boolean loginP = false, loginD = false;
   for(int i=0;i<Patients.size();i++){
     if(doc.equals(Patients.get(i).document) && pw.equals(Patients.get(i).password)){
-      loginP=true;
-      Patients.get(i).show();
-      page=3;
+      loginP = true;
+      println("logged: patient");
+      pLogged = Patients.get(i);
+      page = 3;
       break;
     }
   }
   if(!loginP){
     for(int i=0;i<Doctors.size();i++){
       if(doc.equals(Doctors.get(i).document) && pw.equals(Doctors.get(i).password)){
-        loginD=true;
-        Patients.get(i).show();
-        page=3;
-      break;
+        loginD = true;
+        println("logged: doctor");
+        dLogged = Doctors.get(i);
+        page = 3;
+        break;
+      }
     }
   }
-  }
-  
-  if(!loginP && !loginD)println("Documento y/o contraseña incorrectos");
+  clearcp3();
 }
 
 void Ver(){
+  if(pLogged != null)pLogged.show();
+  else if(dLogged != null)dLogged.show();
   page=4;
+}
+
+void Modificar(){
+  if(pLogged != null)pLogged.modify();
+  else if(dLogged != null)dLogged.modify();
+  page=5;
+}
+
+void Guardar(){
+  pLogged.getChanges();
+  page=3;
 }
 
 void pageSelect(){
