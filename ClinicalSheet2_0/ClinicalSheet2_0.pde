@@ -6,14 +6,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 ArrayList<Patient> Patients = new ArrayList<Patient>();
 ArrayList<Doctor> Doctors = new ArrayList<Doctor>();
-ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8; 
+//Crea los grupos para las distintas "páginas". En la pestaña "Inicializando" se encontrará la explicación para cada grupo.
+ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cpR;
 int page;
 Patient pLogged=null;
-Doctor dLogged=null;
 PFont pfont;
+//Estas matrices son para la importación de los datos de los pacientes y los doctores desde archivos Pacientes.xlsx y Doctores.xlsx. 
+//Código tomado de https://conorblack.wordpress.com/2014/03/23/export-import-processing-excel-xlsx/
 String[][] impP, impD;
-ArrayList special = new ArrayList();
+ArrayList <String> special = new ArrayList<String>();
+ArrayList <String> doc = new ArrayList<String>();
+//Campos para la visualización de los datos
 Textarea nombre, apellidos, nacimiento, documento, especialidad;
+//Campos para la modificación de los datos
 Textfield mNombre, mApellidos, mDocumento, mDia, mMes, mAnio, mContra;
 
 
@@ -21,7 +26,7 @@ void setup (){
   size(750,500);
   declaringControls();
   creatingControls();
-  page=0;
+  page=6;
   impP = importExcel(dataPath("Documentos")+"/"+"Pacientes.xlsx",7);
   impD = importExcel(dataPath("Documentos")+"/"+"Doctores.xlsx",8);
   arrayInit();
@@ -45,10 +50,15 @@ public void Registrar(){
                        cp2.get(Textfield.class,"Año").getText(),
                        cp2.get(Textfield.class,"Contraseña").getText());
  Patients.add(patient);
+ exporting();//Exporta automáticamente lo datos al archivo excel para guardarlos.
  page=0;
 }
 
-void Regresar(){page = 0;/*clearing();*/ }
+void Regresar(){
+  if(page==4||page==5||page==6)page=3;
+  else if (page==3)page=2;
+  else page =0;
+}
 
 void Registrarse(){page=1;}
 
@@ -57,7 +67,7 @@ void Ingresar(){page=2;}
 void IngresarP(){lookForPatient(cp3.get(Textfield.class,"Documento").getText(),cp3.get(Textfield.class,"Contraseña").getText());}
 
 void lookForPatient(String doc, String pw){
-  boolean loginP = false, loginD = false;
+  boolean loginP = false;
   for(int i=0;i<Patients.size();i++){
     if(doc.equals(Patients.get(i).document) && pw.equals(Patients.get(i).password)){
       loginP = true;
@@ -66,33 +76,22 @@ void lookForPatient(String doc, String pw){
       break;
     }
   }
-  if(!loginP){
-    for(int i=0;i<Doctors.size();i++){
-      if(doc.equals(Doctors.get(i).document) && pw.equals(Doctors.get(i).password)){
-        loginD = true;
-        dLogged = Doctors.get(i);
-        page = 3;
-        break;
-      }
-    }
-  }
   clearcp3();
 }
 
 void Ver(){
   if(pLogged != null)pLogged.show();
-  else if(dLogged != null)dLogged.show();
   page=4;
 }
 
 void Modificar(){
   if(pLogged != null)pLogged.modify();
-  else if(dLogged != null)dLogged.modify();
   page=5;
 }
 
 void Guardar(){
   pLogged.getChanges();
+  exporting();
   page=3;
 }
 
@@ -100,6 +99,26 @@ void Date(){
   page=6;
 }
 
+void Especialidad(int sel){
+  //cp7.get(ScrollableList.class,"Doctores").setVisible(true);
+  String sp = special.get(sel);
+  doc.clear();
+  cp7.get(ScrollableList.class,"Doctores").setLabel("Doctores").clear();
+  for(int i=0;i<Doctors.size();i++){
+    if(Doctors.get(i).speciality.equals(sp)){
+      doc.add(Doctors.get(i).name+" "+ Doctors.get(i).lastName);
+    }
+  }
+  cp7.get(ScrollableList.class,"Doctores").addItems(doc).setVisible(true);
+}
+
+void Doctores(int n){
+  String[] toDo = {"Ver Datos","Solicitar cita"};
+  cp7.get(ScrollableList.class,"toDowithDoctor").clear();
+  cp7.get(ScrollableList.class,"toDowithDoctor").addItems(toDo).setVisible(true);
+}
+
+//Selecciona qué grupo será visible y qué grupo no.
 void pageSelect(){
  switch(page) {
    case(0):
@@ -110,7 +129,7 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
-     cp8.setVisible(false);
+     cpR.setVisible(false);
      break;
      
    case(1):
@@ -121,7 +140,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
-     cp8.setVisible(true);
+     cpR.get(Button.class,"Regresar").setLabel("Cancelar");
+     cpR.setVisible(true);
      break;
      
    case(2):
@@ -132,7 +152,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
-     cp8.setVisible(true);
+     cpR.get(Button.class,"Regresar").setLabel("Regresar");
+     cpR.setVisible(true);
      break;
      
    case(3):
@@ -143,7 +164,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
-     cp8.setVisible(true);
+     cpR.get(Button.class,"Regresar").setLabel("Cerrar sesión");
+     cpR.setVisible(true);
      break;
      
    case(4):
@@ -154,6 +176,8 @@ void pageSelect(){
      cp5.setVisible(true);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cpR.get(Button.class,"Regresar").setLabel("Regresar");
+     cpR.setVisible(true);
      break;
      
    case(5):
@@ -164,6 +188,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(true);
      cp7.setVisible(false);
+     cpR.get(Button.class,"Regresar").setLabel("Cancelar");
+     cpR.setVisible(true);
      break;
      
    case(6):
@@ -174,6 +200,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(true);
+     cpR.get(Button.class,"Regresar").setLabel("Cancelar");
+     cpR.setVisible(true);
      break;
      
    /**case(7):
@@ -188,7 +216,7 @@ void pageSelect(){
  } 
 }
 
-
+//Converte las matrices de String en objetos de la clase Paciente y Doctor, respectivamente 
 void arrayInit(){
   for (int i=0;i<impP.length;i++){
     Patient patient = new Patient(impP[i][0],impP[i][1],impP[i][2],impP[i][3],impP[i][4],impP[i][5],impP[i][6]);
@@ -204,14 +232,19 @@ void arrayInit(){
 //Oprimiendo la tecla 'Ctrl' se actualiza el archivo de Pacientes. El archivo Doctores se queda inamovible.
 void keyReleased(){
   if (keyCode == CONTROL){
-    String[][] exp = new String[Patients.size()][7];
+    exporting();
+  }
+}
+
+//Exporta los cambios realizados en la lista Patients al archivo Pacientes.xlsx
+void exporting(){
+  String[][] exp = new String[Patients.size()][7];
     for(int i=0;i<Patients.size();i++){
       for(int j=0;j<7;j++){
         exp[i][j]=selection(j,Patients.get(i));
       }
     }
     exportExcel(exp, dataPath("Documentos")+"/"+"Pacientes.xlsx");
-  }
 }
 
 String selection(int j,Patient p){
@@ -238,5 +271,8 @@ void specialInit(){
   for (int i=0;i<Doctors.size();i++){
     special.add(Doctors.get(i).speciality);
   }
+  HashSet h = new HashSet(special);
+  special.clear();
+  special.addAll(h);
   cp7.get(ScrollableList.class,"Especialidad").addItems(special);
 }

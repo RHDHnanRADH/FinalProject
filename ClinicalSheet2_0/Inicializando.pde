@@ -6,7 +6,7 @@ void declaringControls(){
   cp5 = new ControlP5(this);
   cp6 = new ControlP5(this);
   cp7 = new ControlP5(this);
-  cp8 = new ControlP5(this);
+  cpR = new ControlP5(this);
   //cp9 = new ControlP5(this);
 }
 
@@ -64,7 +64,7 @@ void creatingControls(){
   nacimiento = cp5.addTextarea("Fecha de nacimiento").setPosition(0.05*width, 0.19*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
   especialidad = cp5.addTextarea("Especialidad").setPosition(0.05*width, 0.26*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
   
-  //TO DO: cp6 to cp7
+  //Crea los campos de texto para poder cambiar los datos
   mNombre = cp6.addTextfield("Nombre").setPosition(0.05*width, 0.05*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
   mApellidos = cp6.addTextfield("Apellidos").setPosition(0.05*width, 0.15*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
   mDocumento = cp6.addTextfield("Documento de Identidad").setPosition(0.05*width, 0.25*height).setSize(int(0.75*width),int(0.06*height)).setFont(font).setAutoClear(true);
@@ -83,11 +83,17 @@ void creatingControls(){
   cp6.getController("Año").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
   cp6.getController("Contraseña").getCaptionLabel().setFont(font).setSize(int(0.02*height)).toUpperCase(false);
   
+  //Crea las listas para la selección del doctor
   cp7.addScrollableList("Especialidad").setPosition(0.05*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height));
-  cp7.getController("Especialidad").getCaptionLabel().setFont(font).toUpperCase(false);
+  cp7.addScrollableList("Doctores").setPosition(0.32*width,0.05*height).setSize(int(0.5*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
+  cp7.addScrollableList("toDowithDoctor").setLabel("¿Qué desea hacer?").setPosition(0.84*width,0.05*height).setSize(int(0.25*width),int(0.3*height)).setBarHeight(int(0.06*height)).setItemHeight(int(0.06*height)).setVisible(false);
   
-  cp8.addButton("Regresar").setPosition(0.5625*width,0.93*height).setSize(int(0.42*width),int(0.05*height));
-  cp8.getController("Regresar").getCaptionLabel().setFont(font).toUpperCase(false);
+  cp7.getController("Especialidad").getCaptionLabel().setFont(font).toUpperCase(false);
+  cp7.getController("Doctores").getCaptionLabel().setFont(font).toUpperCase(false);
+  cp7.getController("toDowithDoctor").getCaptionLabel().setFont(font).toUpperCase(false);
+  
+  cpR.addButton("Regresar").setPosition(0.5625*width,0.93*height).setSize(int(0.42*width),int(0.05*height));
+  cpR.getController("Regresar").getCaptionLabel().setFont(font).toUpperCase(false);
 }
 
 void clearcp3(){
