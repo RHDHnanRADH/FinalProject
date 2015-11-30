@@ -1,9 +1,11 @@
 # FinalProject
 
 */--------------------PROYECTO FINAL. Programación Orientada a Objetos--------------
-*/--------------------PROFESOR: Jean Pierre Charalambos------------------------
+		     
+		      */--------------------PROFESOR: Jean Pierre Charalambos------------------------
 
 -NOMBRE DEL PROYECTO: GESTOR DE DATOS Y CITAS MÉDICAS
+
 -AUTORES: David Reyes, Alejandro Ávila, Jennifer Zuluaga.
 
 */----------------------------------------------------------------------------------------
