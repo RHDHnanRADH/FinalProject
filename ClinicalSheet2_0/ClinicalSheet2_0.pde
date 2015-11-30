@@ -30,6 +30,7 @@ void setup (){
   declaringControls();
   creatingControls();
   cp8.setVisible(false);
+  cp5.setVisible(false);
   page=0;
   impP = importExcel(dataPath("Documentos")+"/"+"Pacientes.xlsx",7);
   impD = importExcel(dataPath("Documentos")+"/"+"Doctores.xlsx",8);
@@ -54,13 +55,20 @@ public void Registrar(){
                        cp2.get(Textfield.class,"Año").getText(),
                        cp2.get(Textfield.class,"Contraseña").getText());
  Patients.add(patient);
+ clearing();
  exporting();//Exporta automáticamente lo datos al archivo excel para guardarlos.
  page=0;
 }
 
 void Regresar(){
   if(page==4||page==5||page==6 ||page==7){
-    if(page==6) cp7.setVisible(false);
+    if(page==6){
+      cp7.setVisible(false);
+      cp5.setVisible(false);
+      reinitCp5Pos();
+      cpL.setVisible(false);
+      cp8.setVisible(false);
+    }
   page=3;
 }
   else if (page==3)page=2;
@@ -127,19 +135,39 @@ void Doctores(){
 
 void toDoWithDoctor(int n){
   if(n==0){
-    /*println(cp7.get(ScrollableList.class,"toDoWithDoctor").getItem(n));
-    nombre.setPosition(0.05*width,0.5*height).setVisible(true);
-    apellidos.setPosition(0.05*width,0.6*height).setVisible(true);
-    nacimiento.setPosition(0.05*width,0.7*height).setVisible(true);
-    especialidad.setPosition(0.05*width,0.5*height).setVisible(true);
-    cpR.get(Button.class,"Limpiar").setVisible(true);*/
+    println("InicioProceso",Doctors.size());
+    String docName=cp7.get(ScrollableList.class,"Doctores").getLabel();
+    for(int i=0;i<Doctors.size();i++){
+      String cdocName = Doctors.get(i).name+" "+Doctors.get(i).lastName;
+      println(cdocName);
+      if(cdocName.equals(docName)){
+        Doctors.get(i).show();
+        break;
+      }
+    }
+    nombre.setPosition(0.05*width,0.3*height);
+    documento.setPosition(0.05*width,0.4*height);
+    nacimiento.setPosition(0.05*width,0.5*height);
+    especialidad.setPosition(0.05*width,0.6*height);
+    cp5.setVisible(true);
+    cpL.setVisible(true);
   }else if(n==1){
     cp8.setVisible(true);
   }
 }
 
 void Limpiar(){
+  loop();
   cp5.setVisible(false);
+  cpL.setVisible(false);
+  reinitCp5Pos();
+}
+
+void reinitCp5Pos(){
+  nombre.setPosition(0.05*width,0.05*height);
+  documento.setPosition(0.05*width,0.12*height);
+  nacimiento.setPosition(0.05*width,0.19*height);
+  especialidad.setPosition(0.05*width,0.26*height);
 }
 
 void EnviarSolicitud(){
@@ -177,6 +205,7 @@ void pageSelect(){
      cp8.setVisible(false);
      cp9.setVisible(false);
      cpR.setVisible(false);
+     cpL.setVisible(false);
      break;
      
    case(1):
@@ -191,6 +220,7 @@ void pageSelect(){
      cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cancelar");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
      
    case(2):
@@ -205,6 +235,7 @@ void pageSelect(){
      cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Regresar");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
      
    case(3):
@@ -219,6 +250,7 @@ void pageSelect(){
      cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cerrar sesión");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
      
    case(4):
@@ -233,6 +265,7 @@ void pageSelect(){
      cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Regresar");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
      
    case(5):
@@ -247,6 +280,7 @@ void pageSelect(){
      cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cancelar");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
      
    case(6):
@@ -254,7 +288,7 @@ void pageSelect(){
      cp2.setVisible(false);
      cp3.setVisible(false);
      cp4.setVisible(false);
-     cp5.setVisible(false);
+     //cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(true);
      cp9.setVisible(false);
@@ -274,6 +308,7 @@ void pageSelect(){
      cp9.setVisible(true);
      cpR.get(Button.class,"Regresar").setLabel("Regresar");
      cpR.setVisible(true);
+     cpL.setVisible(false);
      break;
  } 
 }

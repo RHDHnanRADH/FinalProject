@@ -109,10 +109,10 @@ void creatingControls(){
   cp8.getController("Hora").getCaptionLabel().setFont(font).toUpperCase(false);
   
   cp9.addTextarea("Fecha").setPosition(0.05*width, 0.05*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
-  cp9.addTextarea("Doctor").setPosition(0.05*width, 0.15*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
+  cp9.addTextarea("Doctor").setPosition(0.05*width, 0.12*height).setSize(int(0.75*width),int(0.06*height)).setFont(font);
   
   cpR.addButton("Regresar").setPosition(0.5625*width,0.93*height).setSize(int(0.42*width),int(0.05*height));
-  cpL.addButton("Limpiar").setPosition(0.05*width,0.9*height).setSize(int(0.3*width),int(0.05*height)).setVisible(false);
+  cpL.addButton("Limpiar").setPosition(0.05*width,0.9*height).setSize(int(0.3*width),int(0.05*height));
   cpR.getController("Regresar").getCaptionLabel().setFont(font).toUpperCase(false);
   cpL.getController("Limpiar").getCaptionLabel().setFont(font).toUpperCase(false);
   
@@ -121,4 +121,15 @@ void creatingControls(){
 void clearcp3(){
   cp3.get(Textfield.class,"Documento").clear();
   cp3.get(Textfield.class,"Contraseña").clear();
+}
+
+void clearing(){
+  cp2.get(Textfield.class,"Nombre").clear();
+  cp2.get(Textfield.class,"Apellidos").clear();
+  cp2.get(Textfield.class,"Documento de Identidad").clear();
+  cp2.get(Textfield.class,"Contraseña").clear();
+  cp2.get(Textfield.class,"Dia").clear();
+  cp2.get(Textfield.class,"Mes").clear();
+  cp2.get(Textfield.class,"Año").clear();
+
 }

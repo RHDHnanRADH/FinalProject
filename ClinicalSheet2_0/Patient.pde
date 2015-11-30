@@ -8,6 +8,7 @@ class Patient extends User{
   nombre.setText("Nombre: "+this.name+" "+this.lastName);
   documento.setText("Documento: "+this.document);
   nacimiento.setText("Fecha de Nacimiento: "+ this.day + " de " + this.month + " de " + this.year);
+  especialidad.setText("Paciente");
  }
  
  void modify(){
