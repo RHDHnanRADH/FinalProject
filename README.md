@@ -2,7 +2,8 @@
 
 */--------------------PROYECTO FINAL. Programación Orientada a Objetos--------------
 		     
-		      */--------------------PROFESOR: Jean Pierre Charalambos------------------------
+
+ */--------------------PROFESOR: Jean Pierre Charalambos------------------------
 
 -NOMBRE DEL PROYECTO: GESTOR DE DATOS Y CITAS MÉDICAS
 
@@ -23,6 +24,7 @@ comunicación entre dispositivos (usuarios) no ha sido implementada (se plantea 
 proyectos de alcance posterior).
 
 */-------------------------------------------------------------------------------------
+
 CONTROLES.
 
 El ingreso de datos de realiza a partir del teclado del computador de manera directa, el 
@@ -53,4 +55,5 @@ carpeta "Code" de la subcarpeta de "FinalProject-master": "ClinicalSheet2_0", de
 que sea posible exportar e importar adecuadamente los datos a archivos .xlsx, utilizados 
 
 para el almacenamiento de datos.
+
 */-------------------------------------------------------------------------------------- 
