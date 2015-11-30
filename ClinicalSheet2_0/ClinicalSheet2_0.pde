@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 ArrayList<Patient> Patients = new ArrayList<Patient>();
 ArrayList<Doctor> Doctors = new ArrayList<Doctor>();
 //Crea los grupos para las distintas "páginas". En la pestaña "Inicializando" se encontrará la explicación para cada grupo.
-ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cpR;
+ControlP5 cp1, cp2, cp3, cp4, cp5, cp6, cp7, cp8, cp9, cpR, cpL;
 int page;
 Patient pLogged=null;
 PFont pfont;
@@ -16,6 +16,9 @@ PFont pfont;
 String[][] impP, impD;
 ArrayList <String> special = new ArrayList<String>();
 ArrayList <String> doc = new ArrayList<String>();
+String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+String[] dias = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+String[] horas = {"07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"};
 //Campos para la visualización de los datos
 Textarea nombre, apellidos, nacimiento, documento, especialidad;
 //Campos para la modificación de los datos
@@ -26,7 +29,8 @@ void setup (){
   size(750,500);
   declaringControls();
   creatingControls();
-  page=6;
+  cp8.setVisible(false);
+  page=0;
   impP = importExcel(dataPath("Documentos")+"/"+"Pacientes.xlsx",7);
   impD = importExcel(dataPath("Documentos")+"/"+"Doctores.xlsx",8);
   arrayInit();
@@ -55,7 +59,10 @@ public void Registrar(){
 }
 
 void Regresar(){
-  if(page==4||page==5||page==6)page=3;
+  if(page==4||page==5||page==6 ||page==7){
+    if(page==6) cp7.setVisible(false);
+  page=3;
+}
   else if (page==3)page=2;
   else page =0;
 }
@@ -112,12 +119,50 @@ void Especialidad(int sel){
   cp7.get(ScrollableList.class,"Doctores").addItems(doc).setVisible(true);
 }
 
-void Doctores(int n){
+void Doctores(){
   String[] toDo = {"Ver Datos","Solicitar cita"};
-  cp7.get(ScrollableList.class,"toDowithDoctor").clear();
-  cp7.get(ScrollableList.class,"toDowithDoctor").addItems(toDo).setVisible(true);
+  cp7.get(ScrollableList.class,"toDoWithDoctor").clear();
+  cp7.get(ScrollableList.class,"toDoWithDoctor").addItems(toDo).setVisible(true);
 }
 
+void toDoWithDoctor(int n){
+  if(n==0){
+    /*println(cp7.get(ScrollableList.class,"toDoWithDoctor").getItem(n));
+    nombre.setPosition(0.05*width,0.5*height).setVisible(true);
+    apellidos.setPosition(0.05*width,0.6*height).setVisible(true);
+    nacimiento.setPosition(0.05*width,0.7*height).setVisible(true);
+    especialidad.setPosition(0.05*width,0.5*height).setVisible(true);
+    cpR.get(Button.class,"Limpiar").setVisible(true);*/
+  }else if(n==1){
+    cp8.setVisible(true);
+  }
+}
+
+void Limpiar(){
+  cp5.setVisible(false);
+}
+
+void EnviarSolicitud(){
+  String mes = cp8.get(ScrollableList.class,"Mes").getLabel();
+  String dia = cp8.get(ScrollableList.class,"Dia").getLabel();
+  String hora = cp8.get(ScrollableList.class,"Hora").getLabel();
+  String doctor = cp7.get(ScrollableList.class,"Doctores").getLabel();
+  if(mes.equals("Febrero")&&int(dia)>28){/*doNothing*/}
+  else pLogged.ConfirmDate(mes,dia,hora,doctor);
+  page=3;
+}
+
+void CancelarSolicitud(){
+  cp8.setVisible(false);
+  cp8.get(ScrollableList.class,"Mes").setLabel("Mes");
+  cp8.get(ScrollableList.class,"Dia").setLabel("Dia");
+  cp8.get(ScrollableList.class,"Hora").setLabel("Hora");
+}
+
+void VDate(){
+  if(pLogged != null)pLogged.date.showDate();
+  page = 7;
+}
 //Selecciona qué grupo será visible y qué grupo no.
 void pageSelect(){
  switch(page) {
@@ -129,6 +174,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.setVisible(false);
      break;
      
@@ -140,6 +187,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cancelar");
      cpR.setVisible(true);
      break;
@@ -152,6 +201,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Regresar");
      cpR.setVisible(true);
      break;
@@ -164,6 +215,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cerrar sesión");
      cpR.setVisible(true);
      break;
@@ -176,6 +229,8 @@ void pageSelect(){
      cp5.setVisible(true);
      cp6.setVisible(false);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Regresar");
      cpR.setVisible(true);
      break;
@@ -188,6 +243,8 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(true);
      cp7.setVisible(false);
+     cp8.setVisible(false);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cancelar");
      cpR.setVisible(true);
      break;
@@ -200,19 +257,24 @@ void pageSelect(){
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(true);
+     cp9.setVisible(false);
      cpR.get(Button.class,"Regresar").setLabel("Cancelar");
      cpR.setVisible(true);
      break;
      
-   /**case(7):
-     cp1.setVisible(true);
+   case(7):
+     cp1.setVisible(false);
      cp2.setVisible(false);
      cp3.setVisible(false);
      cp4.setVisible(false);
      cp5.setVisible(false);
      cp6.setVisible(false);
      cp7.setVisible(false);
-     break;*/
+     cp8.setVisible(false);
+     cp9.setVisible(true);
+     cpR.get(Button.class,"Regresar").setLabel("Regresar");
+     cpR.setVisible(true);
+     break;
  } 
 }
 

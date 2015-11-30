@@ -11,7 +11,4 @@ class Doctor extends User{
     nacimiento.setText("Fecha de Nacimiento: "+ this.day + " de " + this.month + " de " + this.year);
     especialidad.setText("Especialidad: " + this.speciality);
   }
-  
-  void modify(){
-  }
 }
